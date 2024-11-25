@@ -1,11 +1,4 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:hackathon_smit/Auth/auth.dart';
-import 'package:hackathon_smit/Theme/AppTheme.dart';
-import 'package:hackathon_smit/firebase_options.dart';
+import 'export/AllExport.dart';
 
 Future <void> main()async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,10 +22,10 @@ class MyApp extends StatelessWidget {
           return GetMaterialApp(
               debugShowCheckedModeBanner: false,
               title: 'Flutter Demo',
-              theme: lightMode,
-              darkTheme: darkMode,
-              // themeMode: themeController.themeMode.value,
-              home: const AuthScreen());
+              // theme: lightMode,
+              // darkTheme: darkMode,
+              // themeMode: themeController.themeMode.value,cl
+              home: const SplashScreen());
         });
   }
 }

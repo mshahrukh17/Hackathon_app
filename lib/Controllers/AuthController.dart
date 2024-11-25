@@ -7,6 +7,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hackathon_smit/Components/BottomNavBar.dart';
+import 'package:hackathon_smit/View/Doctor/doctordashboard.dart';
+import 'package:hackathon_smit/View/Admin/AdminDashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends GetxController {
@@ -95,32 +98,71 @@ class AuthController extends GetxController {
       final UserCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       var uid = UserCredential.user!.uid;
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(uid)
+          .get()
+          .then((DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          var data = documentSnapshot.data() as Map;
+          setdata(data);
+          Get.offAll(() => Navbar());
+        } else {
+          FirebaseFirestore.instance
+              .collection("admin")
+              .doc(uid)
+              .get()
+              .then((DocumentSnapshot documentSnapshot) {
+            if (documentSnapshot.exists) {
+              var data = documentSnapshot.data() as Map;
+              setdata(data);
+              Get.offAll(() => AdminDashboard());
+            } else {
+              FirebaseFirestore.instance
+                  .collection("doctors")
+                  .doc(uid)
+                  .get()
+                  .then((DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists) {
+                  var data = documentSnapshot.data() as Map;
+                  setdata(data);
+                  Get.offAll(() => DoctorDashboard());
+                } else {
+                  print("Document does not exist");
+                  Get.snackbar(
+                      "Error", "No user type matched for this account");
+                }
+              });
+            }
+          });
+        }
+      });
+
       loginemail.clear();
       loginpassword.clear();
-       Get.snackbar(
+      Get.snackbar(
         "Success",
         "User Login Successfully",
       );
       setloading(false);
     } on FirebaseAuthException catch (e) {
       setloading(false);
-    if (e.code == 'user-not-found') {
-      Get.snackbar("Error", "No user found with this email");
-    } else if (e.code == 'wrong-password') {
-      Get.snackbar("Error", "Wrong password, please try again");
-    } else if (e.code == 'invalid-email') {
-      Get.snackbar("Error", "Invalid email format");
-    } else if (e.code == 'user-disabled') {
-      Get.snackbar("Error", "This user account has been disabled");
-    }else if (e.code == 'too-many-requests') {
-      Get.snackbar("Error", "Too many login attempts. Try again later.");
-    } 
-    else {
-      Get.snackbar("Error", "Authentication failed: ${e.message}");
+      if (e.code == 'user-not-found') {
+        Get.snackbar("Error", "No user found with this email");
+      } else if (e.code == 'wrong-password') {
+        Get.snackbar("Error", "Wrong password, please try again");
+      } else if (e.code == 'invalid-email') {
+        Get.snackbar("Error", "Invalid email format");
+      } else if (e.code == 'user-disabled') {
+        Get.snackbar("Error", "This user account has been disabled");
+      } else if (e.code == 'too-many-requests') {
+        Get.snackbar("Error", "Too many login attempts. Try again later.");
+      } else {
+        Get.snackbar("Error", "Authentication failed: ${e.message}");
+      }
+    } catch (e) {
+      setloading(false);
+      Get.snackbar("Error", "Something went wrong: ${e.toString()}");
     }
-  } catch (e) {
-    setloading(false);
-    Get.snackbar("Error", "Something went wrong: ${e.toString()}");
-  }
   }
 }

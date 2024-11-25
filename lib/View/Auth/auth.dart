@@ -1,9 +1,5 @@
 import 'dart:ui';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hackathon_smit/Auth/LoginPage.dart';
-import 'package:hackathon_smit/Auth/Signup.dart';
-import 'package:lottie/lottie.dart';
+import '../../export/AllExport.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
@@ -14,12 +10,16 @@ class AuthScreen extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Stack(
         children: [
-          Center(
-            child: Lottie.network(
-                'https://lottie.host/55f697cd-3bcc-40f0-9d6f-94ac16115fa4/Dhr2se9vA5.json',
-                repeat: true,
-                reverse: false),
-          ),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Image.asset('assets/Group.png', color: Colors.black,)),
+             Positioned(
+            bottom: 0,
+            right: 0,
+            left: 0,
+            child: Image.asset('assets/Group.png', color: Colors.black,)),
           Center(
             child: ClipRRect(
               child: BackdropFilter(

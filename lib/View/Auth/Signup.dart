@@ -1,10 +1,6 @@
 // ignore_for_file: body_might_complete_normally_nullable, deprecated_member_use, must_be_immutable, unused_local_variable
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:hackathon_smit/Components/AppButton.dart';
-import '../Components/TextFieldWidget.dart';
-import '../Controllers/AuthController.dart';
+
+import '../../export/AllExport.dart';
 
 class SignUpPage extends StatelessWidget {
   SignUpPage({super.key});

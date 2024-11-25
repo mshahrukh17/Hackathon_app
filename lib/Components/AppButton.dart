@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../export/AllExport.dart';
 
 class AppButton extends StatelessWidget {
   var child;
@@ -27,6 +26,7 @@ class AppButton extends StatelessWidget {
       child: MaterialButton(
         onPressed: onpress,
         child: child,
+        textColor: Colors.white,
         disabledColor: Colors.black,
         focusColor: Color(0xfff283393),
         splashColor: Color(0xfff148BCC),
